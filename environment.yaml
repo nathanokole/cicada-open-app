@@ -1,0 +1,27 @@
+name: planthopper
+channels:
+  - pytorch          # PyTorch & CUDA helper package
+  - nvidia           #   "
+  - conda-forge      # base scientific stack
+dependencies:
+  - python=3.10
+  - pytorch=2.5.1              # main library
+  - torchvision=0.20.1
+  - pytorch-cuda=12.1          # comment‑out if CPU only
+  - pip
+  - pip:
+      - streamlit>=1.34
+      - streamlit-plotly-events
+      - opencv-python
+      - scikit-learn
+      - scikit-image
+      - pretrainedmodels
+      - plotly
+      - numpy
+      - pandas
+      - pillow
+      - matplotlib
+      - rasterio
+      - universaldatatool
+      - web.py
+      - openpyxl

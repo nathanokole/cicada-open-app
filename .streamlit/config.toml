@@ -1,0 +1,14 @@
+[server]
+maxUploadSize = 2048
+runOnSave = true
+headless = false
+
+[theme]
+base = "light"
+primaryColor = "#4E79A7"
+
+[client]
+toolbarMode = "viewer"
+
+[ui]
+hideTopBar = false
