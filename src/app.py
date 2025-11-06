@@ -195,7 +195,7 @@ def commit_one_display_box_to_custom(box_disp_xywh: Tuple[float, float, float, f
     raw_mask = _roi_mask_from_crop(roi)
 
     # inference sizes
-    m1_size = st.session_state.out_sizes.get(m1_name, MODEL_PATHS[m1_name][2])
+    m1_size = st.session_state.out_sizes.get(m1_name, MODEL_PATHS[m1_name][3])
     roi_m1, _ = prep_roi_and_mask(roi, raw_mask, dpi, out_size=m1_size)
     roi_inf = roi_m1.astype("float32") / 255.0
 
@@ -203,7 +203,7 @@ def commit_one_display_box_to_custom(box_disp_xywh: Tuple[float, float, float, f
 
     lab_m2 = None
     if (m2_name in st.session_state.models) and lab_m1 in {"Cixiidae", "Planthopper"}:
-        m2_size = st.session_state.out_sizes.get(m2_name, MODEL_PATHS[m2_name][2])
+        m2_size = st.session_state.out_sizes.get(m2_name, MODEL_PATHS[m2_name][3])
         if m2_size != m1_size:
             roi_m2, _ = prep_roi_and_mask(roi, raw_mask, dpi, out_size=m2_size)
             roi_inf2 = roi_m2.astype("float32") / 255.0
@@ -338,8 +338,8 @@ if st.session_state.base_m2_map is None:
     needs_m2 = {i for i, lab in enumerate(st.session_state.base_m1_labels) if lab in {"Cixiidae", "Planthopper"}}
     m2_map: Dict[int, str] = {}
     if needs_m2 and (m2_name in st.session_state.models):
-        m1_size = st.session_state.out_sizes.get(m1_name, MODEL_PATHS[m1_name][2])
-        m2_size = st.session_state.out_sizes.get(m2_name, MODEL_PATHS[m2_name][2])
+        m1_size = st.session_state.out_sizes.get(m1_name, MODEL_PATHS[m1_name][3])
+        m2_size = st.session_state.out_sizes.get(m2_name, MODEL_PATHS[m2_name][3])
         sel_idxs = sorted(needs_m2)
         if m1_size == m2_size:
             sel_imgs = [m1_inputs[i] for i in sel_idxs]
