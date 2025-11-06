@@ -16,4 +16,4 @@ rasterio
 universaldatatool
 web.py
 openpyxl
-yaml
+PyYAML
