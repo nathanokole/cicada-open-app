@@ -244,6 +244,7 @@ loaded, errors = [], {}
 for base, labels in (("M1", M1_LABELS), ("M2", M2_LABELS)):
     if base in MODEL_PATHS and base not in st.session_state.models:
         cfg = _conf(base)
+        print(cfg, flush=True)
         try:
             st.session_state.models[base] = load_model(cfg["path"], cfg["file_id"], cfg["backbone_out"], cfg["num_classes"])
             st.session_state.out_sizes[base] = cfg["out_size"]
