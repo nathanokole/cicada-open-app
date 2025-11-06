@@ -67,8 +67,26 @@ for k, v in {
 # =====================================================
 # Cache helpers (I/O, heavy ops)
 # =====================================================
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+import io
+from googleapiclient.http import MediaIoBaseDownload
+import json, os
+
+def download_from_drive(file_id, dest_path):
+    creds = service_account.Credentials.from_service_account_file(json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"]))
+    service = build('drive', 'v3', credentials=creds)
+    request = service.files().get_media(fileId=file_id)
+    with io.FileIO(dest_path, 'wb') as fh:
+        downloader = MediaIoBaseDownload(fh, request)
+        done = False
+        while not done:
+            status, done = downloader.next_chunk()
+            print("Download %d%%." % int(status.progress() * 100))
+
 @st.cache_resource(show_spinner=True)
-def load_model(path: str, backbone_out_: int, num_classes_: int):
+def load_model(path: str, file_id: str, backbone_out_: int, num_classes_: int):
+    download_from_drive(file_id, path)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     m = ModifiedInception(pretrained_path=path, backbone_out=backbone_out_, num_classes=num_classes_)
     return m.to(device).eval()
@@ -93,8 +111,8 @@ def morph_stage(lbls: List[str], msks: List[np.ndarray], dpi_val: Optional[int])
 # Utilities
 # =====================================================
 def _conf(name: str) -> Dict:
-    path, backbone_out, out_size, num_classes = MODEL_PATHS[name]
-    return {"path": path, "backbone_out": backbone_out, "out_size": out_size, "num_classes": num_classes}
+    path, file_id, backbone_out, out_size, num_classes = MODEL_PATHS[name]
+    return {"path": path, "file_id": file_id, "backbone_out": backbone_out, "out_size": out_size, "num_classes": num_classes}
 
 def _norm_pred(p) -> str:
     if p is None:
@@ -223,7 +241,7 @@ for base, labels in (("M1", M1_LABELS), ("M2", M2_LABELS)):
     if base in MODEL_PATHS and base not in st.session_state.models:
         cfg = _conf(base)
         try:
-            st.session_state.models[base] = load_model(cfg["path"], cfg["backbone_out"], cfg["num_classes"])
+            st.session_state.models[base] = load_model(cfg["path"], cfg["file_id"], cfg["backbone_out"], cfg["num_classes"])
             st.session_state.out_sizes[base] = cfg["out_size"]
             st.session_state.labels_map[base] = labels
             loaded.append(base)

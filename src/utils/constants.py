@@ -39,6 +39,6 @@ with open(CONFIG_PATH, 'r') as f:
 
 
 MODEL_PATHS = {
-    "M1" : (config['M1_MODEL_PATH'], 8192, 600, 13),
-    "M2" : (config['M2_MODEL_PATH'], 8192, 600, 4)
+    "M1" : (config['M1_MODEL_PATH'][0], config['M1_MODEL_PATH'][1], 8192, 600, 13),
+    "M2" : (config['M2_MODEL_PATH'][0], config['M1_MODEL_PATH'][1], 8192, 600, 4)
 }
