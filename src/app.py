@@ -77,7 +77,7 @@ def download_from_drive(file_id, dest_path):
     #d = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"].replace("\\n", "\n"))
     #st.code(d)
     print(repr(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"][1946:]), flush=True)
-    e = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"][1946:])
+    e = json.loads("{" + os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"][1946:])
     
     st.code(e)
     creds = service_account.Credentials.from_service_account_file(json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"]))
