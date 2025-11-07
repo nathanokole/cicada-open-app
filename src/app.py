@@ -82,6 +82,7 @@ def download_from_drive(file_id, dest_path):
         done = False
         while not done:
             status, done = downloader.next_chunk()
+            print("Download: ", done, flush=True)
             print("Download %d%%." % int(status.progress() * 100), flush=True)
 
 @st.cache_resource(show_spinner=True)
