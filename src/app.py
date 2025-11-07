@@ -87,9 +87,9 @@ def download_from_drive(file_id, dest_path):
 @st.cache_resource(show_spinner=True)
 def load_model(path: str, file_id: str, backbone_out_: int, num_classes_: int):
     print(os.path.exists(path), flush=True)
-    download_from_drive(file_id, path)
     print(file_id, flush=True)
     print(path, flush=True)
+    download_from_drive(file_id, path)
     print(os.path.exists(path), flush=True)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     m = ModifiedInception(pretrained_path=path, backbone_out=backbone_out_, num_classes=num_classes_)
