@@ -70,7 +70,7 @@ def get_prediction_TTA(
     images: list[np.ndarray],
     labels,
     batch_size: int = 32,
-    device: str = "cuda:0",
+    device: str = "cpu",
     empty_cache: bool = False,
 ):
     """
