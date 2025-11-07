@@ -80,7 +80,7 @@ def download_from_drive(file_id, dest_path):
     e = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"])
     
     st.code(e)
-    creds = service_account.Credentials.from_service_account_file(json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"]))
+    creds = service_account.Credentials.from_service_account_info(json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"]))
     print("Cred: ", creds, flush=True)
     service = build('drive', 'v3', credentials=creds)
     request = service.files().get_media(fileId=file_id)
