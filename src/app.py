@@ -75,6 +75,7 @@ import json, os
 
 def download_from_drive(file_id, dest_path):
     creds = service_account.Credentials.from_service_account_file(json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"]))
+    print("Cred: ", creds, flush=True)
     service = build('drive', 'v3', credentials=creds)
     request = service.files().get_media(fileId=file_id)
     with io.FileIO(dest_path, 'wb') as fh:
