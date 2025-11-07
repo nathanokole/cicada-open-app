@@ -74,11 +74,8 @@ from googleapiclient.http import MediaIoBaseDownload
 import json, os
 
 def download_from_drive(file_id, dest_path):
-    try:
-        print(json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"])["token_uri"], flush=True)
-    except Exception as e:
-        print(e, flush=True)
-
+    d = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"])
+    print(d, flush=True)
     creds = service_account.Credentials.from_service_account_file(json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"]))
     print("Cred: ", creds, flush=True)
     service = build('drive', 'v3', credentials=creds)
