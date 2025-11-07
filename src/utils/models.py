@@ -30,7 +30,7 @@ class ModifiedInception(nn.Module):
         return self.new_logits(features)
 
 
-def get_predictions(model, images, labels, batch_size=8, device='cpu'):
+def get_predictions(model, images, labels, batch_size=4, device='cpu'):
     labels_out, idx_out, probs_out = [], [], []
     for i in range(0, len(images), batch_size):
         batch = torch.stack([
@@ -69,7 +69,7 @@ def get_prediction_TTA(
     model,
     images: list[np.ndarray],
     labels,
-    batch_size: int = 32,
+    batch_size: int = 4,
     device: str = "cpu",
     empty_cache: bool = False,
 ):
