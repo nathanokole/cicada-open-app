@@ -129,7 +129,7 @@ def detect_insect_candidates(
     img, dpi,
     min_cm2=0.008, max_cm2=1.0,
     max_square=None, max_sq_frac=None,
-    merge_boxes=False
+    merge_boxes=False, expansion_factor = 1.4
 ):
     mask = build_insect_mask(img, dpi, min_cm2=min_cm2, max_cm2=max_cm2)
 
@@ -175,6 +175,12 @@ def detect_insect_candidates(
     # ROIs
     rois, roi_masks = [], []
     for x1,y1,x2,y2 in sq.astype(int):
+        def expand_box(x1, x2, expansion_factor = expansion_factor):
+            ''' expand box to include wings which are generally transparent'''
+            center = (x1+x2)/2; length = (x2-x1)/2
+            x1, x2 = int(center - length*expansion_factor), int(center + length*expansion_factor)
+            return x1, x2
+        
         x1 = max(0, min(img.shape[1]-1, x1)); x2 = max(0, min(img.shape[1], x2))
         y1 = max(0, min(img.shape[0]-1, y1)); y2 = max(0, min(img.shape[0], y2))
         rois.append(img[y1:y2, x1:x2].copy())
