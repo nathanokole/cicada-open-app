@@ -181,6 +181,9 @@ def detect_insect_candidates(
             x1, x2 = int(center - length*expansion_factor), int(center + length*expansion_factor)
             return x1, x2
         
+        x1, x2 = expand_box(x1, x2)
+        y1, y2 = expand_box(y1, y2)
+        
         x1 = max(0, min(img.shape[1]-1, x1)); x2 = max(0, min(img.shape[1], x2))
         y1 = max(0, min(img.shape[0]-1, y1)); y2 = max(0, min(img.shape[0], y2))
         rois.append(img[y1:y2, x1:x2].copy())
